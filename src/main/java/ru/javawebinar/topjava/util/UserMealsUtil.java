@@ -30,31 +30,31 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with excess. Implement by cycles
-        List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
+
         Map<LocalDate, Integer> caloriesList = new HashMap<>();
-
-        LocalDateTime date = meals.get(0).getDateTime();
-        int calories = 0;
-
         for (UserMeal userMeal : meals) {
-
-            if (!date.toLocalDate().equals(userMeal.getDateTime().toLocalDate())) {
-                calories = 0;
-                date = userMeal.getDateTime();
-            }
-
-            calories += userMeal.getCalories();
-            caloriesList.put(date.toLocalDate(), calories);
+            LocalDate mealDate = userMeal.getDateTime().toLocalDate();
+            caloriesList.put(mealDate, caloriesList.getOrDefault(mealDate, 0) + userMeal.getCalories());
         }
 
-        for (UserMeal userMeal: meals) {
-            date = userMeal.getDateTime();
+        List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
+        for (UserMeal userMeal : meals) {
+            LocalDateTime dateTime = userMeal.getDateTime();
 
-            if (TimeUtil.isBetweenHalfOpen(date.toLocalTime(), startTime, endTime)) {
-                calories = userMeal.getCalories();
-                userMealWithExcessList.add(new UserMealWithExcess(date, userMeal.getDescription(), calories, caloriesList.get(date.toLocalDate()) > caloriesPerDay));
+            if (TimeUtil.isBetweenHalfOpen(dateTime.toLocalTime(), startTime, endTime)) {
+                userMealWithExcessList.add(new UserMealWithExcess(dateTime, userMeal.getDescription(), userMeal.getCalories(), caloriesList.get(dateTime.toLocalDate()) > caloriesPerDay));
             }
         }
+
+//        final Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
+//        meals.forEach(meal -> caloriesSumByDate.merge(meal.getDate(), meal.getCalories(), Integer::sum));
+
+//        final List<MealTo> mealsTo = new ArrayList<>();
+//        meals.forEach(meal -> {
+//            if (isBetweenHalfOpen(meal.getTime(), startTime, endTime)) {
+//                mealsTo.add(createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
+//            }
+//        });//after refactoring
 
         return userMealWithExcessList;
     }
