@@ -21,9 +21,21 @@ public class MealTo {
         this.excess = excess;
     }
 
-//    public Boolean getExcess() {
-//        return excess.get();
-//    }
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+        public Boolean getExcess() {
+        return excess;
+    }
 
     // for filteredBySetterRecursion
     public void setExcess(boolean excess) {
