@@ -20,8 +20,12 @@
         .header {
             font-size: 25px;
         }
+
+        label {
+
+        }
     </style>
-    <title>Meals</title>
+    <title>Meals List</title>
 </head>
 
 <body style="background-color: lightblue; text-align: center">
@@ -29,7 +33,8 @@
 <hr>
 <h1>Meals</h1>
 <br>
-
+<h3><a href="add_edit_meals.jsp">Add meal</a></h3>
+<br>
 <table style="width:50%">
 
     <tr class="header">
@@ -57,10 +62,9 @@
             <th>${parsedDate}</th>
             <th>${meal.getDescription()}</th>
             <th>${meal.getCalories()}</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th><a href="/topjava/meals?action=update&mealsId=<c:out value="${meal.getId()}"/>">Update</a></th>
+            <th><a href="/topjava/meals?action=delete&mealsId=<c:out value="${meal.getId()}"/>">Delete</a></th>
         </tr>
-
     </c:forEach>
 
 </table>
