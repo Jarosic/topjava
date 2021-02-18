@@ -11,7 +11,7 @@ public class SpringMain {
         ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
 
-//        UserRepository userRepository = (UserRepository) appCtx.getBean("inmemoryUserRepository");
+        //UserRepository userRepository = (UserRepository) appCtx.getBean("inmemoryUserRepository");
         UserRepository userRepository = appCtx.getBean(UserRepository.class);
         userRepository.getAll();
         appCtx.close();
