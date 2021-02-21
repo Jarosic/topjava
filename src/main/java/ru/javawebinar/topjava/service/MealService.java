@@ -26,7 +26,7 @@ public class MealService {
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);;
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     public Meal get(int id) {
