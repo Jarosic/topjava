@@ -23,8 +23,11 @@ import java.util.stream.Collectors;
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private MealService service;
+    private final MealService service;
+
+    public MealRestController(MealService service) {
+        this.service = service;
+    }
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
@@ -53,7 +56,7 @@ public class MealRestController {
     }
 
     public Collection<Meal> getAll() {
-        log.info("getAll {}", getAll().toString());
+        log.info("getAll {}");
         return service.getAll();
     }
 
@@ -80,4 +83,5 @@ public class MealRestController {
                 .peek(System.out::println)
                 .collect(Collectors.toList());
     }
+
 }
