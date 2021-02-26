@@ -44,7 +44,7 @@ public class JdbcMealRepository implements MealRepository {
         MapSqlParameterSource map = new MapSqlParameterSource()//помогает вставлять записи в SimpleJdbcInsert
                 .addValue("id", meal.getId())
                 .addValue("user_id", userId)
-                .addValue("datetime", meal.getDateTime())
+                .addValue("date_time", meal.getDateTime())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories());
         if (meal.isNew()) {
@@ -52,7 +52,7 @@ public class JdbcMealRepository implements MealRepository {
             System.out.println(newKey.intValue());
             meal.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
-                "UPDATE meals SET datetime=:datetime, description=:description, calories=:calories WHERE id=:id", map) == 0) {
+                "UPDATE meals SET date_time=:date_time, description=:description, calories=:calories WHERE id=:id", map) == 0) {
             return null;
         }
         return meal;
@@ -71,11 +71,13 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? ORDER BY datetime DESC", ROW_MAPPER, userId);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? ORDER BY date_time DESC",
+                ROW_MAPPER, userId);
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return jdbcTemplate.query("SELECT * FROM meals WHERE datetime BETWEEN ? AND ?", ROW_MAPPER, startDateTime, endDateTime);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE datetime BETWEEN ? AND ?",
+                ROW_MAPPER, startDateTime, endDateTime);
     }
 }
