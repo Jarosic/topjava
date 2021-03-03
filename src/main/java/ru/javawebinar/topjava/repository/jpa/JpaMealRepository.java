@@ -5,8 +5,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDateTime;
@@ -22,6 +24,7 @@ public class JpaMealRepository implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
+
         User ref = em.getReference(User.class, userId);
         meal.setUser(ref);
 
@@ -39,14 +42,26 @@ public class JpaMealRepository implements MealRepository {
         Query query = em.createQuery("DELETE FROM Meal m where m.id=:id and m.user.id=:user_id");
         return query.setParameter("user_id", userId).setParameter("id", id)
                 .executeUpdate() != 0;
-
     }
+
+//    @Override
+//    public Meal get(int id, int userId) {
+//        Query query = em.createQuery("SELECT m FROM Meal m where m.user.id=:user_id and m.id=:id");
+//        query.setParameter("user_id", userId).setParameter("id", id);
+//        return (Meal) query.getSingleResult();
+//    }
 
     @Override
     public Meal get(int id, int userId) {
         Query query = em.createQuery("SELECT m FROM Meal m where m.user.id=:user_id and m.id=:id");
-        query.setParameter("user_id", userId).setParameter("id", id);
-        return (Meal) query.getSingleResult();
+        Meal meal;
+        try {
+            query.setParameter("user_id", userId).setParameter("id", id);
+            meal = (Meal) query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new NotFoundException("NotFoundExs!");
+        }
+        return meal;
     }
 
     @Override
@@ -62,7 +77,7 @@ public class JpaMealRepository implements MealRepository {
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         Query query = em.createQuery(
                 "SELECT m FROM Meal m where m.user.id=:user_id " +
-                        "and m.dateTime >= :startDateTime and m.dateTime < :endDateTime");
+                        "and m.dateTime >= :startDateTime and m.dateTime < :endDateTime ORDER BY m.dateTime desc");
         query
                 .setParameter("user_id", userId)
                 .setParameter("startDateTime", startDateTime)
