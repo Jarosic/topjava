@@ -92,6 +92,9 @@
     </beans>
 
     <beans profile="jdbc">
+        <context:property-placeholder
+                location="classpath:ru/javawebinar/topjava/repository/jdbc/"
+                system-properties-mode="OVERRIDE"/>
     </beans>
     <beans profile="jpa">
     </beans>
