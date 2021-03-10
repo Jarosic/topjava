@@ -1,14 +1,19 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.jdbc.JdbcMealRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @Repository
 public class DataJpaMealRepository implements MealRepository {
+    private static final Logger LOG = getLogger(DataJpaMealRepository.class);
 
     private final CrudMealRepository crudMealRepository;
 
@@ -34,6 +39,7 @@ public class DataJpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
+        LOG.info("DataJPA meal get!!!!!");
         return crudMealRepository.get(id, userId);
     }
 
