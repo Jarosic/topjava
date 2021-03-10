@@ -30,9 +30,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(resolver = Profiles.ActiveDbProfileResolver.class)
-public class MealServiceTest {
-
-    private static final StringBuilder results = new StringBuilder();
+public abstract class MealServiceTest {
 
     @Autowired
     private MealService service;

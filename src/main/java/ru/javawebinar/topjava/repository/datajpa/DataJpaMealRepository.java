@@ -26,8 +26,6 @@ public class DataJpaMealRepository implements MealRepository {
 
     @Override
     public Meal save(Meal meal, int userId) {
-        System.out.println("user id: " + userId);
-        System.out.println(meal.toString());
         meal.setUser(crudUserRepository.getOne(userId));
         return crudMealRepository.save(meal);
     }
@@ -39,7 +37,6 @@ public class DataJpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        LOG.info("DataJPA meal get!!!!!");
         return crudMealRepository.get(id, userId);
     }
 
