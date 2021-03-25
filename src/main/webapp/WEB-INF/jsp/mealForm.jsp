@@ -13,7 +13,7 @@
     <hr>
     <h2>${meal.id == null ? 'Create meal' : 'Edit meal'}</h2>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
-    <form method="post" action="/topjava/meals/create">
+    <form method="post" action="create">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
             <dt>Id:</dt>

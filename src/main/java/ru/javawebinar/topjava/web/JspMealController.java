@@ -30,7 +30,7 @@ public class JspMealController {
         return "meals";
     }
 
-    @PostMapping("/meals/create")
+    @PostMapping("/create")
     public String setMeal(@RequestParam(value = "id", required = false) String id,
                           @RequestParam(value = "dateTime") String dateTime,
                           @RequestParam(value = "description") String description,
@@ -50,7 +50,7 @@ public class JspMealController {
         return "redirect:/meals";
     }
 
-    @GetMapping("/meals/create")
+    @GetMapping("/create")
     public String create(@RequestParam(value = "id", required = false) String id, Model model ) {
         Meal meal = new Meal();
 
@@ -62,7 +62,7 @@ public class JspMealController {
         return "mealForm";
     }
 
-    @GetMapping("/meals/delete")
+    @GetMapping("/delete")
     public String delete(@RequestParam(value = "id") String id) {
         service.delete(Integer.parseInt(id), SecurityUtil.authUserId());
         return "redirect:/meals";
