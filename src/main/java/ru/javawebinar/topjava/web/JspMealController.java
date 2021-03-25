@@ -40,31 +40,31 @@ public class JspMealController {
     }
 
     @PostMapping("/create")
-    public String setMeal(@RequestParam(value = "id", required = false) String id,
+    public String setMeal(@RequestParam(value = "id", required = false) Integer id,
                           @RequestParam(value = "dateTime") String dateTime,
                           @RequestParam(value = "description") String description,
-                          @RequestParam(value = "calories") String calories) {
+                          @RequestParam(value = "calories") Integer calories) {
         Meal meal = new Meal();
 
         meal.setDateTime(LocalDateTime.parse(dateTime));
         meal.setDescription(description);
-        meal.setCalories(Integer.parseInt(calories));
+        meal.setCalories(calories);
 
-        if (id.equals("")) {
+        if (id == null) {
             service.create(meal, SecurityUtil.authUserId());
         } else {
-            meal.setId(Integer.parseInt(id));
+            meal.setId(id);
             service.update(meal, SecurityUtil.authUserId());
         }
         return "redirect:/meals";
     }
 
     @GetMapping("/create")
-    public String create(@RequestParam(value = "id", required = false) String id, Model model ) {
+    public String create(@RequestParam(value = "id", required = false) Integer id, Model model ) {
         Meal meal = new Meal();
 
         if (id != null) {
-            meal = service.get(Integer.parseInt(id), SecurityUtil.authUserId());
+            meal = service.get(id, SecurityUtil.authUserId());
         }
 
         model.addAttribute("meal", meal);
@@ -72,8 +72,8 @@ public class JspMealController {
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam(value = "id") String id) {
-        service.delete(Integer.parseInt(id), SecurityUtil.authUserId());
+    public String delete(@RequestParam(value = "id") Integer id) {
+        service.delete(id, SecurityUtil.authUserId());
         return "redirect:/meals";
     }
 
@@ -90,6 +90,5 @@ public class JspMealController {
         LOG.info("Filtered: {}", mealsToFiltered.toString());
         model.addAttribute("meals", mealsToFiltered);
         return "meals";
-
     }
 }
