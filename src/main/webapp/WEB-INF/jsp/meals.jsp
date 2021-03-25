@@ -4,15 +4,15 @@
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Meals</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <jsp:include page="fragments/bodyHeader.jsp"/>
-    <hr/>
-    <h2>Meals</h2>
+    <h3><spring:message code="meal.title"/></h3>
     <form method="get" action="meals">
         <input type="hidden" name="action" value="filter">
         <dl>
