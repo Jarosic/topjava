@@ -1,5 +1,8 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +13,17 @@ import ru.javawebinar.topjava.to.MealTo;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
+import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @RestController
 @RequestMapping(value = MealRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealRestController extends AbstractMealController {
-
+    private Logger log = LoggerFactory.getLogger(MealRestController.class);
     static final String REST_URL = "/rest/meals";
 
     @Override
@@ -54,14 +61,45 @@ public class MealRestController extends AbstractMealController {
         super.update(meal, id);
     }
 
-    @Override
-    @GetMapping("/by")
+    //принимаем в параметрах String
+//    @GetMapping("/filter")
+//    public List<MealTo> getBetween(
+//            @RequestParam(required = false) String startDateLocal,
+//            @RequestParam(required = false) String endDateLocal,
+//            @RequestParam(required = false) String startTimeLocal,
+//            @RequestParam(required = false) String endTimeLocal
+//
+//    ) {
+//        LocalDate startDate = parseLocalDate(startDateLocal);
+//        LocalDate endDate = parseLocalDate(endDateLocal);
+//        LocalTime startTime = parseLocalTime(startTimeLocal);
+//        LocalTime endTime = parseLocalTime(endTimeLocal);
+//
+//        return super.getBetween(startDate, startTime, endDate, endTime);
+//    }
+
+    //принимаем в параметрах LocalDateTime
+    @GetMapping("/filter")
     public List<MealTo> getBetween(
-            @RequestParam LocalDate startDate,
-            @RequestParam LocalTime startTime,
-            @RequestParam LocalDate endDate,
-            @RequestParam LocalTime endTime
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    LocalDateTime startDateLocal,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    LocalDateTime endDateLocal,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    LocalDateTime startTimeLocal,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                    LocalDateTime endTimeLocal
+
     ) {
+        LocalDate startDate = startDateLocal.toLocalDate();
+        LocalDate endDate = endDateLocal.toLocalDate();
+        LocalTime startTime = startTimeLocal.toLocalTime();
+        LocalTime endTime = endTimeLocal.toLocalTime();
+
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
 }
