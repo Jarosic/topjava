@@ -23,6 +23,8 @@ function add() {
     $("#editRow").modal();
 }
 
+
+
 function deleteRow(id) {
     $.ajax({
         url: ctx.ajaxUrl + id,
