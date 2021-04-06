@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/ajax/meals/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealUIController extends AbstractMealController {
-    private Logger log = LoggerFactory.getLogger(MealUIController.class);
+    private final Logger log = LoggerFactory.getLogger(MealUIController.class);
 
     @Override
     @GetMapping
