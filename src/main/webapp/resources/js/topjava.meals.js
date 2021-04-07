@@ -1,7 +1,7 @@
-const userAjaxUrl = "ajax/meals/";
+const mealAjaxUrl = "ajax/meals/";
 
 const ctx = {
-    ajaxUrl: userAjaxUrl
+    ajaxUrl: mealAjaxUrl
 };
 
 // $(document).ready(function () {

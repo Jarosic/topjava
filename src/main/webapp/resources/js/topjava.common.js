@@ -81,3 +81,9 @@ function failNoty(jqXHR) {
         layout: "bottomRight"
     }).show();
 }
+
+function reset() {
+    alert("H");
+     form.find(":input").val("");
+}
+

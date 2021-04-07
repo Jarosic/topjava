@@ -11,27 +11,44 @@
 
 <section>
     <h3><spring:message code="meal.title"/></h3>
+<%--    filter bootstrap--%>
+    <form>
+        <div class="row pb-3">
+                <label for="startDate" class="form-label"><spring:message code="meal.startDate"/>:</label>
+           <div class="col-2">
+               <input type="date" class="form-control" value="${param.startDate}" id="startDate">
+           </div>
+        </div>
 
-    <form method="get" action="meals/filter">
-        <dl>
-            <dt><spring:message code="meal.startDate"/>:</dt>
-            <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.endDate"/>:</dt>
-            <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.startTime"/>:</dt>
-            <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.endTime"/>:</dt>
-            <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
-        </dl>
-        <button type="submit"><spring:message code="meal.filter"/></button>
+        <div class="row">
+                <label for="endDate" class="form-label"><spring:message code="meal.endDate"/>:</label>
+            <div class="col-2">
+                <input type="date" class="form-control" value="${param.endDate}" id="endDate">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1 p-3">
+                <label class="form-check-label" for="startTime"><spring:message code="meal.startTime"/>:</label>
+            </div>
+            <div class="col-2 p-3">
+                <input type="time" class="form-check-input" value="${param.startTime}" id="startTime">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1 pb-3">
+                <label class="form-check-label" for="endTime"><spring:message code="meal.endTime"/>:</label>
+            </div>
+            <div class="col-2 pb-3">
+                <input type="time" class="form-check-input" value="${param.endTime}" id="endTime">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mr-1">Filter</button>
+        <button type="reset" id="reset-button-filter" onclick="reset()" class="btn btn-primary">Reset</button>
     </form>
-    <hr>
+
+<%--    table--%>
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 class="text-center"><spring:message code="meal.title"/></h3>
@@ -109,7 +126,6 @@
         </div>
     </div>
 </div>
-
 <jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
