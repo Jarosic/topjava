@@ -1,20 +1,36 @@
 package ru.javawebinar.topjava.to;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class MealTo extends BaseTo {
+public class MealTo extends BaseTo implements Serializable {
 
-    private final LocalDateTime dateTime;
+    @Serial
+    private static final long serialVersionUID = 2L;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private final LocalDateTime  dateTime;
+
+    @NotBlank
+    @Size(min = 2, max = 100)
     private final String description;
 
-    private final int calories;
+    @NotNull
+    private final Integer calories;
 
 //    private final AtomicBoolean excess;      // or Boolean[1],  filteredByAtomic
 //    private final Boolean excess;            // filteredByReflection
 //    private final Supplier<Boolean> excess;  // filteredByClosure
+    @Nullable
     private boolean excess;
 
     @ConstructorProperties({"id", "dateTime", "description", "calories", "excess"})
@@ -26,8 +42,8 @@ public class MealTo extends BaseTo {
         this.excess = excess;
     }
 
-//    public Boolean getExcess() {
-//        return excess.get();
+//    public boolean getExcess() {
+//        return excess;
 //    }
 
     // for filteredBySetterRecursion

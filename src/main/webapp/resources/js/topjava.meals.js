@@ -34,11 +34,14 @@ $(function () {
                 },
                 {
                     "defaultContent": "Edit",
-                    "orderable": false
+                    "orderable": false,
+                    "defaultContent": ""
+                    //"render": renderEditBtn
                 },
                 {
                     "defaultContent": "Delete",
                     "orderable": false
+                    //"render": renderDeleteBtn
                 }
             ],
             "order": [
